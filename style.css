@@ -1,8 +1,9 @@
 /* Extracted styles from index.html */
 
 @media print {
-	body { margin: 0; }
+	body { margin: 0; font-size: smaller; }
 	.no-print { display: none; }
+	
 	.page-break { page-break-after: always; }
 }
 

@@ -53,7 +53,7 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="morning2" onchange="updateStats()">
                 <label for="morning2">
-                    <strong>Uống 500ml nước ấm + 1 viên Omega-3:</strong> Thanh lọc cơ thể, bôi trơn não bộ
+                    <strong>Uống 500ml nước ấm + (1 viên Omega-3):</strong> Thanh lọc cơ thể, bôi trơn não bộ
                 </label>
             </div>
             
@@ -67,7 +67,7 @@
             <div class="checklist-item priority-low">
                 <input type="checkbox" id="morning4" onchange="updateStats()">
                 <label for="morning4">
-                    <strong>Ăn sáng giàu Omega-3:</strong> Cháo yến mạch + hạt óc chó + chuối + trà xanh (không cà phê!)
+                    <strong>Ăn sáng giàu Omega-3:</strong> yến mạch + hạt óc chó + chuối + trà xanh (hạn chế cà phê!)
                 </label>
             </div>
         </div>
@@ -201,6 +201,13 @@
                     <strong>Viết 3 điều may mắn về tiền bạc hôm nay:</strong> Dù nhỏ (tìm được 5k, được mời cafe...)
                 </label>
             </div>
+
+            <div class="checklist-item priority-low">
+                <input type="checkbox" id="night6" onchange="updateStats()">
+                <label for="night6">
+                    <strong>Đọc sách:</strong> Chọn sách phát lịch sử kinh tế, tài chính, tâm lý tích cực (không đọc truyện tranh/tiểu thuyết!)
+                </label>
+            </div>
             
             <div class="checklist-item priority-low">
                 <input type="checkbox" id="night7" onchange="updateStats()">
@@ -284,7 +291,7 @@
             <div class="history-controls">
                 <button onclick="showHistory('all')" class="print-btn" style="background:#667eea; padding:8px 12px; font-size:14px; border-radius:8px;">Xem tất cả</button>
                 <button onclick="showHistory('90')" class="print-btn" style="background:#28a745; padding:8px 12px; font-size:14px; border-radius:8px;">90 ngày gần nhất</button>
-                <button onclick="exportHistory()" class="print-btn" style="background:#764ba2; padding:8px 12px; font-size:14px; border-radius:8px;">Xuất JSON</button>
+                <!-- <button onclick="exportHistory()" class="print-btn" style="background:#764ba2; padding:8px 12px; font-size:14px; border-radius:8px;">Xuất JSON</button> -->
                 <button onclick="clearHistoryConfirm()" class="print-btn" style="background:#dc3545; padding:8px 12px; font-size:14px; border-radius:8px;">Xóa lịch sử</button>
             </div>
 
