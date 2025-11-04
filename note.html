@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist Hàng Ngày - Hóa Giải Tử Vi</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+            .page-break { page-break-after: always; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .date-box {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+        
+        .date-box label {
+            font-weight: bold;
+            color: #667eea;
+            margin-right: 10px;
+        }
+        
+        .date-box input {
+            border: none;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            width: 150px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .time-label {
+            display: inline-block;
+            background: #ffd700;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .checklist-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .checklist-item label {
+            cursor: pointer;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+        
+        .priority-high { border-left: 4px solid #dc3545; }
+        .priority-medium { border-left: 4px solid #ffc107; }
+        .priority-low { border-left: 4px solid #28a745; }
+        
+        .notes-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff9e6;
+            border-radius: 10px;
+            border: 2px dashed #ffc107;
+        }
+        
+        .notes-section h3 {
+            color: #ff8c00;
+            margin-bottom: 10px;
+        }
+        
+        .notes-section textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+        
+        .quote {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            gap: 15px;
+        }
+        
+        .stat-box {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .print-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .print-btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+        
+        .emergency-box {
+            background: #ffe6e6;
+            border: 3px solid #dc3545;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .emergency-box h3 {
+            color: #dc3545;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .emergency-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .emergency-box li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 CHECKLIST HÀNG NGÀY 🌟</h1>
+        <div class="subtitle">Hóa giải Phá Quân • Nuôi dưỡng Thiên Cơ • Xây dựng Tử Vi</div>
+        
+        <div class="date-box">
+            <label>📅 Ngày:</label>
+            <input type="date" id="dateInput">
+            <label style="margin-left: 20px;">🔢 Ngày thứ:</label>
+            <input type="number" id="dayNumber" placeholder="1" min="1" max="90" style="width: 80px;">
+            <span>/90</span>
+        </div>
+
+        <div class="stats no-print">
+            <div class="stat-box">
+                <span class="stat-number" id="completedToday">0</span>
+                <span class="stat-label">Hoàn thành hôm nay</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number" id="totalTasks">24</span>
+                <span class="stat-label">Tổng nhiệm vụ</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number" id="percentComplete">0%</span>
+                <span class="stat-label">Tiến độ</span>
+            </div>
+        </div>
+
+        <!-- BUỔI SÁNG -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🌅</span>
+                BUỔI SÁNG (6h-9h)
+                <span class="time-label">VÀNG NĂNG LƯỢNG</span>
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="morning1" onchange="updateStats()">
+                <label for="morning1">
+                    <strong>Nghi thức Thái Dương:</strong> Ra ban công hướng Đông, đón ánh mặt trời, thở sâu 9 lần, nói khẳng định: "Hôm nay tôi tỏa sáng như mặt trời, tiền bạc tự nhiên đến với tôi"
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="morning2" onchange="updateStats()">
+                <label for="morning2">
+                    <strong>Uống 500ml nước ấm + 1 viên Omega-3:</strong> Thanh lọc cơ thể, bôi trơn não bộ
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-medium">
+                <input type="checkbox" id="morning3" onchange="updateStats()">
+                <label for="morning3">
+                    <strong>Viết 3 điều biết ơn hôm nay:</strong> Lập trình não bộ tích cực ngay từ đầu ngày
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-low">
+                <input type="checkbox" id="morning4" onchange="updateStats()">
+                <label for="morning4">
+                    <strong>Ăn sáng giàu Omega-3:</strong> Cháo yến mạch + hạt óc chó + chuối + trà xanh (không cà phê!)
+                </label>
+            </div>
+        </div>
+
+        <!-- BUỔI TRƯA -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">☀️</span>
+                BUỔI TRƯA (12h-14h)
+            </div>
+            
+            <div class="checklist-item priority-medium">
+                <input type="checkbox" id="noon1" onchange="updateStats()">
+                <label for="noon1">
+                    <strong>Nghỉ trưa 20 phút (nếu được):</strong> Nạp năng lượng cho não Thiên Cơ
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-low">
+                <input type="checkbox" id="noon2" onchange="updateStats()">
+                <label for="noon2">
+                    <strong>Đi bộ 10 phút sau bữa trưa:</strong> Giúp tiêu hóa + giảm căng thẳng
+                </label>
+            </div>
+        </div>
+
+        <!-- BUỔI CHIỀU -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🕒</span>
+                BUỔI CHIỀU (14h-18h)
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="afternoon1" onchange="updateStats()">
+                <label for="afternoon1">
+                    <strong>15h-15h30: WORRY WINDOW!</strong> Đọc danh sách lo lắng từ sáng → Lo tập trung 30 phút → HẾT GIỜ!
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-medium">
+                <input type="checkbox" id="afternoon2" onchange="updateStats()">
+                <label for="afternoon2">
+                    <strong>Uống trà xanh + ăn snack lành mạnh:</strong> Hạt óc chó/hạnh nhân/quả việt quất (tránh đường!)
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-low">
+                <input type="checkbox" id="afternoon3" onchange="updateStats()">
+                <label for="afternoon3">
+                    <strong>Kỹ thuật Pomodoro:</strong> Làm việc 25 phút → Nghỉ 5 phút (giảm quá tải não)
+                </label>
+            </div>
+        </div>
+
+        <!-- BUỔI TỐI -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🌆</span>
+                BUỔI TỐI (18h-20h)
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="evening1" onchange="updateStats()">
+                <label for="evening1">
+                    <strong>Vận động 30 phút:</strong> Chạy bộ/Yoga/Võ thuật/Đấm bao cát (xả Phá Quân!)
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-medium">
+                <input type="checkbox" id="evening2" onchange="updateStats()">
+                <label for="evening2">
+                    <strong>Ăn tối nhẹ trước 19h:</strong> Súp + rau củ + protein ít béo (tránh ăn no quá!)
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-low">
+                <input type="checkbox" id="evening3" onchange="updateStats()">
+                <label for="evening3">
+                    <strong>Nói chuyện với người thật 15 phút:</strong> Gặp mặt/gọi điện (KHÔNG CHAT!) - Chống cô lập
+                </label>
+            </div>
+        </div>
+
+        <!-- BUỔI KHUYA -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🌙</span>
+                BUỔI KHUYA (20h-22h)
+                <span class="time-label">QUAN TRỌNG NHẤT!</span>
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="night1" onchange="updateStats()">
+                <label for="night1">
+                    <strong>20h: BRAIN DUMP!</strong> Viết liên tục 15 phút mọi suy nghĩ → Đóng sổ → Nói "Để ngày mai lo" → Khóa vào ngăn kéo
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="night2" onchange="updateStats()">
+                <label for="night2">
+                    <strong>Kiểm tra TÀI CHÍNH:</strong> Ghi thu chi hôm nay → Chuyển % vào 3 Hũ Vàng (nếu có thu nhập)
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="night3" onchange="updateStats()">
+                <label for="night3">
+                    <strong>21h: Tắm nước ấm + tinh dầu oải hương:</strong> Tập trung 100% vào cảm giác (Sensory Overload)
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="night4" onchange="updateStats()">
+                <label for="night4">
+                    <strong>21h30: Body Scan trên giường:</strong> Quét từ ngón chân → đầu (mỗi bộ phận 30s)
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-medium">
+                <input type="checkbox" id="night5" onchange="updateStats()">
+                <label for="night5">
+                    <strong>Uống 1 viên Magie 400mg + trà hoa cúc:</strong> Thư giãn thần kinh, ngủ sâu hơn
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-low">
+                <input type="checkbox" id="night6" onchange="updateStats()">
+                <label for="night6">
+                    <strong>Viết 3 điều may mắn về tiền bạc hôm nay:</strong> Dù nhỏ (tìm được 5k, được mời cafe...)
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-low">
+                <input type="checkbox" id="night7" onchange="updateStats()">
+                <label for="night7">
+                    <strong>TẮT HOÀN TOÀN điện thoại/laptop:</strong> Để xa giường ít nhất 2m (KHÔNG ĐƯỢC phá quy tắc!)
+                </label>
+            </div>
+        </div>
+
+        <!-- MỌI LÚC -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">⏰</span>
+                MỌI LÚC TRONG NGÀY
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="anytime1" onchange="updateStats()">
+                <label for="anytime1">
+                    <strong>Trigger Log:</strong> Mỗi khi muốn phá hoại → Ghi lại: Giờ/Cảm xúc/Muốn phá gì/Lý do thật
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="anytime2" onchange="updateStats()">
+                <label for="anytime2">
+                    <strong>Quy tắc 30 ngày chờ đợi:</strong> Nếu muốn quyết định lớn (bỏ việc/chia tay...) → Viết ra → CHỜ 30 NGÀY!
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-medium">
+                <input type="checkbox" id="anytime3" onchange="updateStats()">
+                <label for="anytime3">
+                    <strong>Khi lo âu tấn công:</strong> Thực hiện Emergency Plan: Thở 4-7-8 x5 → Nước lạnh → Đi bộ 15' → Viết 3 trang
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-medium">
+                <input type="checkbox" id="anytime4" onchange="updateStats()">
+                <label for="anytime4">
+                    <strong>Cognitive Defusion:</strong> Khi suy nghĩ tiêu cực → Thêm "Tôi đang có suy nghĩ rằng..." → Tạo khoảng cách!
+                </label>
+            </div>
+            
+            <div class="checklist-item priority-low">
+                <input type="checkbox" id="anytime5" onchange="updateStats()">
+                <label for="anytime5">
+                    <strong>Micro-destruction:</strong> Làm 1 điều nhỏ khác thường (đường mới, món mới, người mới...) để não không chán
+                </label>
+            </div>
+        </div>
+
+        <div class="emergency-box">
+            <h3>🚨 KHI KHẨN CẤP - GỌI NGAY!</h3>
+            <ul>
+                <li><strong>Hotline Sức khỏe tâm thần:</strong> 1800 6969 (24/7, miễn phí)</li>
+                <li><strong>2 người bạn "giữ chân":</strong> Tên: __________ SĐT: __________</li>
+                <li><strong>Người thân tin cậy:</strong> Tên: __________ SĐT: __________</li>
+            </ul>
+        </div>
+
+        <div class="notes-section">
+            <h3>📝 GHI CHÚ HÔM NAY</h3>
+            <textarea placeholder="Cảm xúc đặc biệt? Thành tựu nhỏ? Bài học rút ra? Viết thoải mái..."></textarea>
+        </div>
+
+        <div class="quote">
+            "Mỗi ngày hoàn thành checklist này là mỗi ngày bạn đánh bại phiên bản cũ của chính mình. <br>
+            Sau 90 ngày, bạn sẽ không còn nhận ra người trong gương!"
+        </div>
+
+        <button class="print-btn no-print" onclick="window.print()">🖨️ IN CHECKLIST</button>
+
+        <div style="text-align: center; color: #999; font-size: 12px; margin-top: 30px;">
+            © 2025 • Hành trình 90 ngày tự cứu chính mình
+        </div>
+    </div>
+
+    <script>
+        // Tự động điền ngày hôm nay
+        document.getElementById('dateInput').valueAsDate = new Date();
+        
+        // Cập nhật thống kê
+        function updateStats() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const total = checkboxes.length;
+            let completed = 0;
+            
+            checkboxes.forEach(cb => {
+                if (cb.checked) completed++;
+            });
+            
+            const percent = Math.round((completed / total) * 100);
+            
+            document.getElementById('completedToday').textContent = completed;
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('percentComplete').textContent = percent + '%';
+            
+            // Lưu vào localStorage
+            const dateKey = document.getElementById('dateInput').value;
+            if (dateKey) {
+                const state = {};
+                checkboxes.forEach(cb => {
+                    state[cb.id] = cb.checked;
+                });
+                localStorage.setItem('checklist_' + dateKey, JSON.stringify(state));
+            }
+        }
+        
+        // Khôi phục trạng thái khi load lại trang
+        window.addEventListener('load', function() {
+            const dateKey = document.getElementById('dateInput').value;
+            if (dateKey) {
+                const savedState = localStorage.getItem('checklist_' + dateKey);
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    Object.keys(state).forEach(id => {
+                        const checkbox = document.getElementById(id);
+                        if (checkbox) {
+                            checkbox.checked = state[id];
+                        }
+                    });
+                    updateStats();
+                }
+            }
+        });
+        
+        // Cập nhật khi đổi ngày
+        document.getElementById('dateInput').addEventListener('change', function() {
+            // Bỏ check tất cả
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            updateStats();
+            
+            // Load lại trạng thái của ngày mới
+            window.dispatchEvent(new Event('load'));
+        });
+        
+        // Hiệu ứng confetti khi hoàn thành 100%
+        function checkComplete() {
+            const percent = parseInt(document.getElementById('percentComplete').textContent);
+            if (percent === 100) {
+                alert('🎉 CHÚC MỪNG! Bạn đã hoàn thành 100% checklist hôm nay! Bạn là chiến binh thật sự! 💪');
+            }
+        }
+        
+        // Gọi checkComplete mỗi lần update
+        const originalUpdate = updateStats;
+        updateStats = function() {
+            originalUpdate();
+            checkComplete();
+        };
+    </script>
+</body>
+</html>
