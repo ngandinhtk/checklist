@@ -45,12 +45,9 @@ function updateStats() {
             }
         };
 
-        try {
-            localStorage.setItem('checklist_' + dateKey, JSON.stringify(saveObj));
-            showSavedBadge();
-        } catch (e) {
-            console.error('Lỗi lưu localStorage', e);
-        }
+        saveData(dateKey, saveObj)
+            .then(() => showSavedBadge())
+            .catch(e => console.error('Lỗi lưu IndexedDB', e));
     }
 }
 
@@ -67,28 +64,29 @@ function debounce(fn, wait) {
 window.addEventListener('load', function() {
     const dateKey = document.getElementById('dateInput').value;
     if (dateKey) {
-        const raw = localStorage.getItem('checklist_' + dateKey);
-        if (raw) {
-            try {
-                const parsed = JSON.parse(raw);
-                const state = parsed && parsed.state ? parsed.state : parsed;
-                Object.keys(state).forEach(id => {
-                    const checkbox = document.getElementById(id);
-                    if (checkbox) {
-                        checkbox.checked = state[id];
+        loadData(dateKey).then(raw => {
+            if (raw) {
+                try {
+                    const parsed = raw;
+                    const state = parsed && parsed.state ? parsed.state : parsed;
+                    Object.keys(state).forEach(id => {
+                        const checkbox = document.getElementById(id);
+                        if (checkbox) {
+                            checkbox.checked = state[id];
+                        }
+                    });
+                    // restore metadata if present
+                    if (parsed && parsed.meta) {
+                        if (parsed.meta.dayNumber) document.getElementById('dayNumber').value = parsed.meta.dayNumber;
+                        const notesEl = document.querySelector('.notes-section textarea');
+                        if (notesEl && parsed.meta.notes) notesEl.value = parsed.meta.notes;
                     }
-                });
-                // restore metadata if present
-                if (parsed && parsed.meta) {
-                    if (parsed.meta.dayNumber) document.getElementById('dayNumber').value = parsed.meta.dayNumber;
-                    const notesEl = document.querySelector('.notes-section textarea');
-                    if (notesEl && parsed.meta.notes) notesEl.value = parsed.meta.notes;
+                    updateStats();
+                } catch (e) {
+                    console.error('Lỗi parse saved state', e);
                 }
-                updateStats();
-            } catch (e) {
-                console.error('Lỗi parse saved state', e);
             }
-        }
+        });
     }
     // attach auto-save for notes and dayNumber
     const notesEl = document.querySelector('.notes-section textarea');
@@ -128,13 +126,8 @@ updateStats = function() {
 };
 
 // --- Lịch sử: scan localStorage, render và thao tác ---
-function getAllChecklistKeys() {
-    const keys = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const k = localStorage.key(i);
-        if (k && k.startsWith('checklist_')) keys.push(k);
-    }
-    return keys;
+async function getAllChecklistKeys() {
+    return await getAllKeys();
 }
 
 function parseDateFromKey(key) {
@@ -156,20 +149,11 @@ function daysBetween(dateA, dateB) {
     return Math.floor((dateB - dateA) / msPerDay);
 }
 
-function showHistory(mode = '90') {
+async function showHistory(mode = '90') {
     const listEl = document.getElementById('historyList');
     listEl.innerHTML = '';
 
-    const keys = getAllChecklistKeys();
-    const entries = keys.map(k => {
-        const d = parseDateFromKey(k);
-        const raw = localStorage.getItem(k);
-        let parsed = {};
-        try { parsed = JSON.parse(raw) || {}; } catch (e) { parsed = {}; }
-        const state = parsed && parsed.state ? parsed.state : parsed;
-        const stats = getStatsFromState(state);
-        return { key: k, date: d, stats, meta: parsed && parsed.meta ? parsed.meta : null };
-    });
+    const entries = await getAllData();
 
     // sort desc
     entries.sort((a,b) => b.date.localeCompare(a.date));
@@ -188,8 +172,9 @@ function showHistory(mode = '90') {
         const left = document.createElement('div');
         left.innerHTML = `<strong>${entry.date}</strong><div class="small-muted">${age} ngày trước</div>`;
 
+        const stats = getStatsFromState(entry.state);
         const right = document.createElement('div');
-        right.innerHTML = `${entry.stats.completed}/${entry.stats.total} — ${entry.stats.percent}%`;
+        right.innerHTML = `${stats.completed}/${stats.total} — ${stats.percent}%`;
 
         item.appendChild(left);
         item.appendChild(right);
@@ -198,11 +183,7 @@ function showHistory(mode = '90') {
         item.style.cursor = 'pointer';
         item.title = 'Nhấp để xem và tải trạng thái vào giao diện';
         item.addEventListener('click', () => {
-            const saved = localStorage.getItem(entry.key);
-            if (!saved) return;
-            let parsed = {};
-            try { parsed = JSON.parse(saved); } catch (e) { parsed = {}; }
-            const state = parsed && parsed.state ? parsed.state : parsed;
+            const state = entry.state;
             // clear current
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
             Object.keys(state).forEach(id => {
@@ -211,10 +192,10 @@ function showHistory(mode = '90') {
             });
             document.getElementById('dateInput').value = entry.date;
             // restore meta
-            if (parsed && parsed.meta) {
-                if (parsed.meta.dayNumber) document.getElementById('dayNumber').value = parsed.meta.dayNumber;
+            if (entry.meta) {
+                if (entry.meta.dayNumber) document.getElementById('dayNumber').value = entry.meta.dayNumber;
                 const notesEl = document.querySelector('.notes-section textarea');
-                if (notesEl && parsed.meta.notes) notesEl.value = parsed.meta.notes;
+                if (notesEl && entry.meta.notes) notesEl.value = entry.meta.notes;
             }
             updateStats();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -228,10 +209,12 @@ function showHistory(mode = '90') {
     }
 }
 
-function exportHistory() {
-    const keys = getAllChecklistKeys();
+async function exportHistory() {
+    const allData = await getAllData();
     const out = {};
-    keys.forEach(k => { out[k.replace('checklist_', '')] = JSON.parse(localStorage.getItem(k)); });
+    allData.forEach(item => {
+        out[item.date] = item;
+    });
     const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -244,11 +227,11 @@ function exportHistory() {
 }
 
 function clearHistoryConfirm() {
-    if (!confirm('Bạn có chắc muốn xóa toàn bộ lịch sử checklist (dữ liệu localStorage)? Hành động này không thể hoàn tác.')) return;
-    const keys = getAllChecklistKeys();
-    keys.forEach(k => localStorage.removeItem(k));
-    showHistory('all');
-    alert('Đã xóa lịch sử.');
+    if (!confirm('Bạn có chắc muốn xóa toàn bộ lịch sử checklist (dữ liệu IndexedDB)? Hành động này không thể hoàn tác.')) return;
+    clearHistory().then(() => {
+        showHistory('all');
+        alert('Đã xóa lịch sử.');
+    });
 }
 
 // show 90-day history on load
