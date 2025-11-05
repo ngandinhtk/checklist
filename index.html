@@ -35,7 +35,13 @@
             </div>
         </div>
 
-        <!-- BUỔI SÁNG -->
+        <div class="tabs">
+            <button class="tab-link active" onclick="openTab(event, 'checklistTab')">Checklist</button>
+            <button class="tab-link" onclick="openTab(event, 'toolsTab')">Công cụ</button>
+        </div>
+
+        <div id="checklistTab" class="tab-content" style="display: block;">
+            <!-- BUỔI SÁNG -->
         <div class="section">
             <div class="section-title">
                 <span class="section-icon">🌅</span>
@@ -259,8 +265,10 @@
                 </label>
             </div>
         </div>
+        </div>
 
-        <div class="emergency-box">
+        <div id="toolsTab" class="tab-content">
+            <div class="emergency-box">
             <h3>🚨 KHI KHẨN CẤP - GỌI NGAY!</h3>
             <ul>
                 <li><strong>Hotline Sức khỏe tâm thần:</strong> 1800 6969 (24/7, miễn phí)</li>
@@ -273,13 +281,6 @@
             <h3>📝 GHI CHÚ HÔM NAY</h3>
             <textarea placeholder="Cảm xúc đặc biệt? Thành tựu nhỏ? Bài học rút ra? Viết thoải mái..."></textarea>
         </div>
-
-        <div class="quote">
-            "Mỗi ngày hoàn thành checklist này là mỗi ngày bạn đánh bại phiên bản cũ của chính mình. <br>
-            Sau 90 ngày, bạn sẽ không còn nhận ra người trong gương!"
-        </div>
-
-        <button class="print-btn no-print" onclick="window.print()">🖨️ IN CHECKLIST</button>
 
         <!-- LỊCH SỬ CHECK -->
         <div class="history-section no-print">
@@ -298,7 +299,8 @@
             <div id="historyList" class="history-list" aria-live="polite">
                 <!-- items injected here -->
             </div>
-            <div class="small-muted" style="margin-top:8px;">Ghi chú: dữ liệu được lưu cục bộ trên trình duyệt (localStorage). Để chia sẻ/đồng bộ, xuất JSON rồi lưu nơi an toàn.</div>
+            <div class="small-muted" style="margin-top:8px;">Ghi chú: dữ liệu được lưu cục bộ trên trình duyệt (IndexedDB). Để chia sẻ/đồng bộ, xuất JSON rồi lưu nơi an toàn.</div>
+        </div>
         </div>
 
         <div style="text-align: center; color: #999; font-size: 12px; margin-top: 30px;">

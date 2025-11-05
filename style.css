@@ -155,7 +155,7 @@ h1 {
 }
 
 .notes-section textarea {
-	width: 100%;
+	width: 97%;
 	min-height: 100px;
 	padding: 10px;
 	border: 1px solid #ddd;
@@ -290,3 +290,40 @@ h1 {
 	line-height: 1.6;
 }
 
+.checklist-item input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    color: #888;
+}
+
+/* Tab styles */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.tab-link {
+    background-color: #f1f1f1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    border-radius: 10px 10px 0 0;
+    margin-right: 5px;
+}
+
+.tab-link:hover {
+    background-color: #ddd;
+}
+
+.tab-link.active {
+    background-color: #667eea;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px 0;
+}

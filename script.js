@@ -106,8 +106,6 @@ document.getElementById('dateInput').addEventListener('change', function() {
 
     // Load lại trạng thái của ngày mới
     window.dispatchEvent(new Event('load'));
-    // refresh history list
-    showHistory('90');
 });
 
 // Hiệu ứng confetti khi hoàn thành 100%
@@ -199,6 +197,7 @@ async function showHistory(mode = '90') {
             }
             updateStats();
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            openTab(null, 'checklistTab');
         });
 
         listEl.appendChild(item);
@@ -234,7 +233,20 @@ function clearHistoryConfirm() {
     });
 }
 
-// show 90-day history on load
-window.addEventListener('load', function() {
-    showHistory('90');
-});
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab-link");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    if(evt) evt.currentTarget.className += " active";
+
+    if(tabName === 'toolsTab'){
+        showHistory('90');
+    }
+}
