@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -14,10 +15,10 @@
         <div class="date-box">
             <label>📅 Ngày:</label>
             <input type="date" id="dateInput">
-            <span id="savedBadge" class="saved-badge">Đã lưu</span>
-            <label style="margin-left: 20px;">🔢 Ngày thứ:</label>
-            <input type="number" id="dayNumber" placeholder="1" min="1" max="90" style="width: 80px;">
+            <label>🔢 Ngày thứ:</label>
+            <input type="number" id="dayNumber" placeholder="1" min="1" max="90" style="width: 40px;">
             <span>/90</span>
+            <span id="savedBadge" class="saved-badge">Đã lưu</span>
         </div>
 
         <div class="stats no-print">
@@ -33,7 +34,7 @@
                 <span class="stat-number" id="percentComplete">0%</span>
                 <span class="stat-label">Tiến độ</span>
             </div>
-        </div>
+        </div> 
 
         <div class="tabs">
             <button class="tab-link active" onclick="openTab(event, 'checklistTab')">Checklist</button>
@@ -133,20 +134,20 @@
         <div class="section">
             <div class="section-title">
                 <span class="section-icon">🌆</span>
-                BUỔI TỐI (18h-20h)
+                BUỔI TỐI (18h-21h)
             </div>
             
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="evening1" onchange="updateStats()">
                 <label for="evening1">
-                    <strong>Vận động 30 phút:</strong> Chạy bộ/Yoga/Võ thuật/Đấm bao cát (xả Phá Quân!)
+                    <strong>Vận động 1 tiếng:</strong> Chạy bộ/Yoga/Võ thuật/Đấm bao cát (xả Phá Quân!)
                 </label>
             </div>
             
             <div class="checklist-item priority-medium">
                 <input type="checkbox" id="evening2" onchange="updateStats()">
                 <label for="evening2">
-                    <strong>Ăn tối nhẹ trước 19h:</strong> Súp + rau củ + protein ít béo (tránh ăn no quá!)
+                    <strong>Ăn tối nhẹ trước 19h30:</strong> Súp + rau củ + protein (tránh ăn no quá!)
                 </label>
             </div>
             
@@ -169,7 +170,7 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="night1" onchange="updateStats()">
                 <label for="night1">
-                    <strong>21h: BRAIN DUMP!</strong> Viết liên tục 15 phút mọi suy nghĩ → Đóng sổ → Nói "Để ngày mai lo" → Khóa vào ngăn kéo
+                    <strong>21h: BRAIN DUMP!</strong> Viết liên tục 10-15 phút mọi suy nghĩ → Đóng sổ → Nói "Để ngày mai lo" → Khóa vào ngăn kéo (giảm lo âu)
                 </label>
             </div>
             
@@ -183,17 +184,10 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="night3" onchange="updateStats()">
                 <label for="night3">
-                    <strong>22h: Tắm nước ấm + tinh dầu oải hương:</strong> Tập trung 100% vào cảm giác (Sensory Overload)
+                    <strong>21h30: Tắm nước ấm + tinh dầu oải hương:</strong> Tập trung 100% vào cảm giác (Sensory Overload)
                 </label>
             </div>
-            
-            <div class="checklist-item priority-high">
-                <input type="checkbox" id="night4" onchange="updateStats()">
-                <label for="night4">
-                    <strong>22h30: Body Scan trên giường:</strong> Quét từ ngón chân → đầu (mỗi bộ phận 30s)
-                </label>
-            </div>
-            
+                      
             <div class="checklist-item priority-medium">
                 <input type="checkbox" id="night5" onchange="updateStats()">
                 <label for="night5">
@@ -211,7 +205,7 @@
             <div class="checklist-item priority-low">
                 <input type="checkbox" id="night6" onchange="updateStats()">
                 <label for="night6">
-                    <strong>Đọc sách:</strong> Chọn sách phát lịch sử kinh tế, tài chính, tâm lý tích cực (không đọc truyện tranh/tiểu thuyết!)
+                    <strong>Đọc sách:</strong> Chọn sách tâm lý tích cực, lịch sử kinh tế, triết học (không đọc truyện tranh/tiểu thuyết!)
                 </label>
             </div>
             
@@ -221,6 +215,14 @@
                     <strong>TẮT HOÀN TOÀN điện thoại/laptop:</strong> Để xa giường ít nhất 2m (KHÔNG ĐƯỢC phá quy tắc!)
                 </label>
             </div>
+
+              <div class="checklist-item priority-high">
+                <input type="checkbox" id="night4" onchange="updateStats()">
+                <label for="night4">
+                    <strong>22h30: Body Scan:</strong> Quét từ ngón chân → đầu (mỗi bộ phận 30s)
+                </label>
+            </div>
+
         </div>
 
         <!-- MỌI LÚC -->
