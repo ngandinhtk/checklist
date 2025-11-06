@@ -29,25 +29,40 @@ function updateStats() {
     document.getElementById('totalTasks').textContent = total;
     document.getElementById('percentComplete').textContent = percent + '%';
 
-    // Lưu vào localStorage với metadata
     const dateKey = document.getElementById('dateInput').value;
     if (dateKey) {
-        const dayNumber = document.getElementById('dayNumber').value || '';
-        const notesEl = document.querySelector('.notes-section textarea');
-        const notes = notesEl ? notesEl.value : '';
+        // Tải dữ liệu hiện có trong ngày để kiểm tra cờ cảnh báo
+        loadData(dateKey).then(oldData => {
+            const alreadyShown = oldData && oldData.meta && oldData.meta.completionAlertShown;
 
-        const saveObj = {
-            state: state,
-            meta: {
-                dayNumber: dayNumber,
-                notes: notes,
-                savedAt: (new Date()).toISOString()
+            // Chỉ hiển thị cảnh báo nếu chúng ta vừa đạt 100% và nó chưa được hiển thị trước đó
+            if (percent === 100 && !alreadyShown) {
+                alert('🎉 CHÚC MỪNG! Bạn đã hoàn thành 100% checklist hôm nay! Bạn là chiến binh thật sự! 💪');
             }
-        };
 
-        saveData(dateKey, saveObj)
-            .then(() => showSavedBadge())
-            .catch(e => console.error('Lỗi lưu IndexedDB', e));
+            const dayNumber = document.getElementById('dayNumber').value || '';
+            const notesEl = document.querySelector('.notes-section textarea');
+            const notes = notesEl ? notesEl.value : '';
+
+            // Giữ nguyên siêu dữ liệu hiện có
+            const oldMeta = (oldData && oldData.meta) ? oldData.meta : {};
+
+            const saveObj = {
+                state: state,
+                meta: {
+                    ...oldMeta,
+                    dayNumber: dayNumber,
+                    notes: notes,
+                    savedAt: (new Date()).toISOString(),
+                    // Đặt cờ thành true nếu nó đã đúng hoặc nếu chúng ta đang ở mức 100%
+                    completionAlertShown: alreadyShown || (percent === 100)
+                }
+            };
+
+            saveData(dateKey, saveObj)
+                .then(() => showSavedBadge())
+                .catch(e => console.error('Lỗi lưu IndexedDB', e));
+        }).catch(e => console.error('Lỗi tải dữ liệu trong updateStats', e));
     }
 }
 
@@ -85,6 +100,11 @@ window.addEventListener('load', function() {
                 } catch (e) {
                     console.error('Lỗi parse saved state', e);
                 }
+            } else {
+                // Nếu không có dữ liệu cho ngày này, hãy đặt lại số liệu thống kê về 0.
+                document.getElementById('completedToday').textContent = 0;
+                document.getElementById('totalTasks').textContent = document.querySelectorAll('input[type="checkbox"]').length;
+                document.getElementById('percentComplete').textContent = '0%';
             }
         });
     }
@@ -102,7 +122,6 @@ document.getElementById('dateInput').addEventListener('change', function() {
     // clear notes/dayNumber UI before load
     const notesEl = document.querySelector('.notes-section textarea'); if (notesEl) notesEl.value = '';
     document.getElementById('dayNumber').value = '';
-    updateStats();
 
     // Load lại trạng thái của ngày mới
     window.dispatchEvent(new Event('load'));
