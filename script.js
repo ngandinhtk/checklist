@@ -127,20 +127,7 @@ document.getElementById('dateInput').addEventListener('change', function() {
     window.dispatchEvent(new Event('load'));
 });
 
-// Hiệu ứng confetti khi hoàn thành 100%
-function checkComplete() {
-    const percent = parseInt(document.getElementById('percentComplete').textContent);
-    if (percent === 100) {
-        alert('🎉 CHÚC MỪNG! Bạn đã hoàn thành 100% checklist hôm nay! Bạn là chiến binh thật sự! 💪');
-    }
-}
-
-// Gọi checkComplete mỗi lần update
-const originalUpdate = updateStats;
-updateStats = function() {
-    originalUpdate();
-    checkComplete();
-};
+// Logic checkComplete hiện được tích hợp vào updateStats để ngăn chặn nhiều cảnh báo.
 
 // --- Lịch sử: scan localStorage, render và thao tác ---
 async function getAllChecklistKeys() {
