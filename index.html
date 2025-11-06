@@ -9,14 +9,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>🌟 CHECKLIST HÀNG NGÀY 🌟</h1>
+        <h1>🌟 CHECKLIST HẰNG NGÀY 🌟</h1>
         <!-- <div class="subtitle">Hóa giải Phá Quân • Nuôi dưỡng Thiên Cơ • Xây dựng Tử Vi</div> -->
         
         <div class="date-box">
             <label>📅 Ngày:</label>
             <input type="date" id="dateInput">
             <label>🔢 Ngày thứ:</label>
-            <input type="number" id="dayNumber" placeholder="1" min="1" max="90" style="width: 40px;">
+            <input type="number" id="dayNumber" placeholder="1" min="1" max="90" style="width: 50px;">
             <span>/90</span>
             <span id="savedBadge" class="saved-badge">Đã lưu</span>
         </div>
@@ -60,7 +60,7 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="morning2" onchange="updateStats()">
                 <label for="morning2">
-                    <strong>Uống 300ml nước ấm + (1 viên Omega-3):</strong> Thanh lọc cơ thể
+                    <strong>Uống 400ml nước ấm + (1 viên Omega-3):</strong> Thanh lọc cơ thể
                 </label>
             </div>
             
@@ -89,7 +89,7 @@
             <div class="checklist-item priority-medium">
                 <input type="checkbox" id="noon1" onchange="updateStats()">
                 <label for="noon1">
-                    <strong>Nghỉ trưa 20 phút (nếu được):</strong> Nạp năng lượng cho não 
+                    <strong>Nghỉ trưa 30 phút (nếu được):</strong> Nạp năng lượng cho não 
                     <!-- (Thiên Cơ thích ngủ trưa!) -->
                 </label>
             </div>
@@ -112,14 +112,14 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="afternoon1" onchange="updateStats()">
                 <label for="afternoon1">
-                    <strong>15h-15h30: WORRY WINDOW!</strong> Đọc danh sách lo lắng từ sáng → Lo tập trung 30 phút → HẾT GIỜ!
+                    <strong>15h-15h30: WORRY WINDOW!</strong> Xem danh sách lo lắng từ sáng → tập trung 30 phút → HẾT GIỜ, DỪNG!
                 </label>
             </div>
             
             <div class="checklist-item priority-medium">
                 <input type="checkbox" id="afternoon2" onchange="updateStats()">
                 <label for="afternoon2">
-                    <strong>Uống trà xanh + ăn snack lành mạnh:</strong> Hạt óc chó/hạnh nhân/quả việt quất (tránh đường!)
+                    <strong>Uống nước ấm + ăn snack lành mạnh:</strong> Hạt óc chó/hạnh nhân/quả việt quất (tránh đường!)
                 </label>
             </div>
             
@@ -141,7 +141,7 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="evening1" onchange="updateStats()">
                 <label for="evening1">
-                    <strong>Vận động 1 tiếng:</strong> Chạy bộ/Yoga/Võ thuật/Đấm bao cát (xả căng thẳng!)
+                    <strong>Vận động 1 tiếng:</strong> Chạy bộ/Yoga/Võ thuật/Dance (xả căng thẳng!)
                      <!-- (xả Phá Quân!) -->
                 </label>
             </div>
@@ -179,7 +179,7 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="night2" onchange="updateStats()">
                 <label for="night2">
-                    <strong>Kiểm tra TÀI CHÍNH:</strong> Ghi thu chi hôm nay → Chuyển % vào 3 Hũ Vàng (nếu có thu nhập)
+                    <strong>Kiểm tra TÀI CHÍNH và LỊCH TRÌNH ngày mai:</strong> Ghi thu chi → Chuyển % vào 3 Hũ Vàng (nếu có thu nhập)
                 </label>
             </div>
             
@@ -207,21 +207,21 @@
             <div class="checklist-item priority-low">
                 <input type="checkbox" id="night6" onchange="updateStats()">
                 <label for="night6">
-                    <strong>Đọc sách:</strong> Chọn sách tâm lý tích cực, lịch sử kinh tế, triết học (không đọc truyện tranh/tiểu thuyết!)
+                    <strong>Đọc 30 trang sách (ghi chú lại 3 ý chính):</strong> Chọn sách tâm lý tích cực, lịch sử kinh tế, triết học (không đọc truyện tranh/tiểu thuyết!)
                 </label>
             </div>
             
             <div class="checklist-item priority-low">
                 <input type="checkbox" id="night7" onchange="updateStats()">
                 <label for="night7">
-                    <strong>TẮT HOÀN TOÀN điện thoại/laptop:</strong> Để xa giường ít nhất 2m (KHÔNG ĐƯỢC phá quy tắc!)
+                    <strong>23h: TẮT HOÀN TOÀN điện thoại/laptop:</strong> Để xa giường ít nhất 2m (KHÔNG ĐƯỢC phá quy tắc!)
                 </label>
             </div>
 
               <div class="checklist-item priority-high">
                 <input type="checkbox" id="night4" onchange="updateStats()">
                 <label for="night4">
-                    <strong>22h30: Body Scan:</strong> Quét từ ngón chân → đầu (mỗi bộ phận 30s)
+                    <strong>Body Scan:</strong> Quét từ ngón chân → đầu (mỗi bộ phận 30s)
                 </label>
             </div>
 
@@ -237,7 +237,7 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="anytime1" onchange="updateStats()">
                 <label for="anytime1">
-                    <strong>Trigger Log:</strong> Mỗi khi muốn phá hoại → Ghi lại: Giờ/Cảm xúc/Muốn phá gì/Lý do thật
+                    <strong>Trigger Log:</strong> Dọn dẹp lại không gian xung quanh khi thấy căng thẳng/lo âu (dọn bàn làm việc, lau nhà, rửa bát...)
                 </label>
             </div>
             
@@ -265,7 +265,7 @@
             <div class="checklist-item priority-low">
                 <input type="checkbox" id="anytime5" onchange="updateStats()">
                 <label for="anytime5">
-                    <strong>Micro-destruction:</strong> Làm 1 điều nhỏ khác thường (đường mới, món mới, người mới...) để não không chán
+                    <strong>Micro-destruction:</strong> Làm 1 điều nhỏ khác thường (đường mới, món mới, bạn mới...) để não không chán
                 </label>
             </div>
         </div>
