@@ -1,4 +1,3 @@
-
 const DB_NAME = 'checklistDB';
 const STORE_NAME = 'checklists';
 
@@ -82,4 +81,43 @@ async function clearHistory() {
         request.onsuccess = () => resolve();
         request.onerror = (event) => reject('Error clearing history: ' + event.target.errorCode);
     });
+}
+
+async function deleteData(date) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction([STORE_NAME], 'readwrite');
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.delete(date);
+
+        request.onsuccess = () => resolve();
+        request.onerror = (event) => reject('Error deleting data: ' + event.target.errorCode);
+    });
+}
+
+async function clearOldData(days) {
+    const allData = await getAllData();
+    if (!allData || allData.length === 0) {
+        return Promise.resolve();
+    }
+
+    const cutoff = new Date();
+    cutoff.setHours(0, 0, 0, 0); // Bắt đầu từ hôm nay
+    cutoff.setDate(cutoff.getDate() - days);
+
+    const deletePromises = [];
+
+    allData.forEach(entry => {
+        const entryDate = new Date(entry.date);
+        if (entryDate < cutoff) {
+            console.log(`Đang xóa dữ liệu cũ từ: ${entry.date}`);
+            deletePromises.push(deleteData(entry.date));
+        }
+    });
+
+    if (deletePromises.length === 0) {
+        return Promise.resolve();
+    }
+
+    return Promise.all(deletePromises);
 }

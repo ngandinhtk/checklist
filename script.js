@@ -77,6 +77,13 @@ function debounce(fn, wait) {
 
 // Khôi phục trạng thái khi load lại trang
 window.addEventListener('load', function() {
+    // Tự động xóa dữ liệu cũ hơn 14 ngày khi tải
+    clearOldData(14).then(() => {
+        console.log('Đã xóa dữ liệu cũ hơn 14 ngày.');
+    }).catch(err => {
+        console.error('Lỗi khi xóa dữ liệu cũ:', err);
+    });
+
     const dateKey = document.getElementById('dateInput').value;
     if (dateKey) {
         loadData(dateKey).then(raw => {
