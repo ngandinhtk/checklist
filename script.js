@@ -146,9 +146,8 @@ function parseDateFromKey(key) {
     return key.replace('checklist_', '');
 }
 
-function getStatsFromState(state) {
+function getStatsFromState(state, total) {
     const ids = Object.keys(state);
-    const total = ids.length;
     let completed = 0;
     ids.forEach(id => { if (state[id]) completed++; });
     const percent = total ? Math.round((completed / total) * 100) : 0;
@@ -171,6 +170,7 @@ async function showHistory(mode = '90') {
 
     const today = new Date();
     const limitDays = 90;
+    const totalTasks = document.querySelectorAll('input[type="checkbox"]').length;
 
     entries.forEach(entry => {
         const entryDate = new Date(entry.date + 'T00:00:00');
@@ -183,7 +183,7 @@ async function showHistory(mode = '90') {
         const left = document.createElement('div');
         left.innerHTML = `<strong>${entry.date}</strong><div class="small-muted">${age} ngày trước</div>`;
 
-        const stats = getStatsFromState(entry.state);
+        const stats = getStatsFromState(entry.state, totalTasks);
         const right = document.createElement('div');
         right.innerHTML = `${stats.completed}/${stats.total} — ${stats.percent}%`;
 
