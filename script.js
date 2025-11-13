@@ -139,6 +139,10 @@ document.getElementById('dateInput').addEventListener('change', function() {
     window.dispatchEvent(new Event('load'));
 });
 
+window.addEventListener('beforeunload', function(event) {
+    updateStats();
+});
+
 // Logic checkComplete hiện được tích hợp vào updateStats để ngăn chặn nhiều cảnh báo.
 
 // --- Lịch sử: scan localStorage, render và thao tác ---

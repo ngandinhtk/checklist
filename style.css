@@ -274,7 +274,7 @@ h1 {
 }
 
 .stat-label {
-	font-size: 12px;
+	font-size: 10px;
 	opacity: 0.9;
 }
 
@@ -362,6 +362,9 @@ h1 {
 
 .review-content {
     flex-grow: 1;
+    max-width: 230px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 .review-content p {
