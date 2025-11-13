@@ -60,7 +60,10 @@ function updateStats() {
             };
 
             saveData(dateKey, saveObj)
-                .then(() => showSavedBadge())
+                .then(() => {
+                    showSavedBadge();
+                    showHistory('90'); // Cập nhật lịch sử ngay sau khi lưu
+                })
                 .catch(e => console.error('Lỗi lưu IndexedDB', e));
         }).catch(e => console.error('Lỗi tải dữ liệu trong updateStats', e));
     }
@@ -121,6 +124,7 @@ window.addEventListener('load', function() {
     const dayNum = document.getElementById('dayNumber');
     if (dayNum) dayNum.addEventListener('change', updateStats);
     loadReviews();
+    showHistory('90'); // Tải lịch sử khi trang được tải
 });
 
 // Cập nhật khi đổi ngày
@@ -260,9 +264,6 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     if(evt) evt.currentTarget.className += " active";
 
-    if(tabName === 'toolsTab'){
-        showHistory('90');
-    }
     if (tabName === 'reviewTab') {
         loadReviews();
     }
@@ -296,7 +297,7 @@ const affirmations = [
     "Tôi luôn giữ thái độ tích cực.",
     "Tôi tự hào về con người tôi đang trở thành.",
     "Tôi buông bỏ những năng lượng cũ không phải của tôi.",
-    "Vũ trụ luôn ủng hộ tôi."
+    "Vũ trụ luôn ủng hộ tôi. Tôi biết là tôi không cô đơn"
 ];
 
 const affirmationText = document.getElementById('affirmationText');
