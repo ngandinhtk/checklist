@@ -356,3 +356,28 @@ h1 {
     display: none;
     padding: 20px 0;
 }
+
+.review-content {
+    flex-grow: 1;
+}
+
+.review-content p {
+    margin: 0 0 5px 0;
+    white-space: pre-wrap;
+}
+
+.delete-review-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    flex-shrink: 0;
+    transition: background 0.3s;
+}
+
+.delete-review-btn:hover {
+    background: #c82333;
+}

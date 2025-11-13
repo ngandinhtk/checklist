@@ -1,14 +1,18 @@
 const DB_NAME = 'checklistDB';
 const STORE_NAME = 'checklists';
+const REVIEW_STORE_NAME = 'reviews';
 
 function openDB() {
     return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, 1);
+        const request = indexedDB.open(DB_NAME, 2);
 
         request.onupgradeneeded = (event) => {
             const db = event.target.result;
             if (!db.objectStoreNames.contains(STORE_NAME)) {
                 db.createObjectStore(STORE_NAME, { keyPath: 'date' });
+            }
+            if (!db.objectStoreNames.contains(REVIEW_STORE_NAME)) {
+                db.createObjectStore(REVIEW_STORE_NAME, { keyPath: 'id', autoIncrement: true });
             }
         };
 
@@ -120,4 +124,40 @@ async function clearOldData(days) {
     }
 
     return Promise.all(deletePromises);
+}
+
+async function addReview(reviewText, reviewDate) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction([REVIEW_STORE_NAME], 'readwrite');
+        const store = transaction.objectStore(REVIEW_STORE_NAME);
+        const request = store.add({ text: reviewText, date: reviewDate });
+
+        request.onsuccess = () => resolve();
+        request.onerror = (event) => reject('Error adding review: ' + event.target.errorCode);
+    });
+}
+
+async function getAllReviews() {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction([REVIEW_STORE_NAME], 'readonly');
+        const store = transaction.objectStore(REVIEW_STORE_NAME);
+        const request = store.getAll();
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = (event) => reject('Error getting all reviews: ' + event.target.errorCode);
+    });
+}
+
+async function deleteReview(reviewId) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction([REVIEW_STORE_NAME], 'readwrite');
+        const store = transaction.objectStore(REVIEW_STORE_NAME);
+        const request = store.delete(reviewId);
+
+        request.onsuccess = () => resolve();
+        request.onerror = (event) => reject('Error deleting review: ' + event.target.errorCode);
+    });
 }

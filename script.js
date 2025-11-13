@@ -120,6 +120,7 @@ window.addEventListener('load', function() {
     if (notesEl) notesEl.addEventListener('input', debounce(updateStats, 400));
     const dayNum = document.getElementById('dayNumber');
     if (dayNum) dayNum.addEventListener('change', updateStats);
+    loadReviews();
 });
 
 // Cập nhật khi đổi ngày
@@ -262,6 +263,9 @@ function openTab(evt, tabName) {
     if(tabName === 'toolsTab'){
         showHistory('90');
     }
+    if (tabName === 'reviewTab') {
+        loadReviews();
+    }
 }
 
 // --- Affirmations ---
@@ -304,3 +308,64 @@ window.addEventListener('load', showNewAffirmation);
 if (newAffirmationBtn) {
     newAffirmationBtn.addEventListener('click', showNewAffirmation);
 }
+
+// --- Review Section ---
+
+async function loadReviews() {
+    const reviewList = document.getElementById('reviewList');
+    reviewList.innerHTML = '';
+    const reviews = await getAllReviews();
+
+    if (reviews.length === 0) {
+        reviewList.innerHTML = '<div class="small-muted">Chưa có review nào.</div>';
+        return;
+    }
+
+    // Sort reviews by date, newest first
+    reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    reviews.forEach(review => {
+        const item = document.createElement('div');
+        item.className = 'history-item';
+
+        const content = document.createElement('div');
+        content.className = 'review-content';
+
+        const text = document.createElement('p');
+        text.textContent = review.text;
+
+        const date = document.createElement('div');
+        date.className = 'small-muted';
+        date.textContent = new Date(review.date).toLocaleString();
+
+        content.appendChild(text);
+        content.appendChild(date);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-review-btn';
+        deleteBtn.textContent = 'Xóa';
+        deleteBtn.onclick = () => handleDeleteReview(review.id);
+
+        item.appendChild(content);
+        item.appendChild(deleteBtn);
+        reviewList.appendChild(item);
+    });
+}
+
+async function handleDeleteReview(reviewId) {
+    if (confirm('Bạn có chắc muốn xóa review này?')) {
+        await deleteReview(reviewId);
+        await loadReviews();
+    }
+}
+
+document.getElementById('addReviewBtn').addEventListener('click', async () => {
+    const reviewInput = document.getElementById('reviewInput');
+    const reviewText = reviewInput.value.trim();
+    if (reviewText) {
+        const reviewDate = new Date().toISOString();
+        await addReview(reviewText, reviewDate);
+        reviewInput.value = '';
+        await loadReviews();
+    }
+});
