@@ -84,6 +84,7 @@ h1 {
 	text-align: center;
 	margin-bottom: 25px;
 }
+
 .affirmation-box p {
 	font-size: 16px;
 	color: #ff6f00;
@@ -91,6 +92,7 @@ h1 {
 	margin-bottom: 15px;
 	font-weight: bold;
 }
+
 .affirmation-box button {
 	background: #e2ab58;
 	color: white;
@@ -99,6 +101,7 @@ h1 {
 	padding: 10px 20px;
 	border-radius: 5px;
 	cursor: pointer;
+	font-size: larger;
 	transition: background 0.3s;
 }
 .affirmation-box button:hover {

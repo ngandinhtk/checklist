@@ -12,7 +12,7 @@
         <h1>🌟 CHECKLIST HẰNG NGÀY 🌟</h1>
         <div class="affirmation-box">
             <p id="affirmationText">Mỗi ngày tôi đều trở nên mạnh mẽ hơn.</p>
-            <button id="newAffirmationBtn">Affirmations</button>
+            <button id="newAffirmationBtn">Affirmation</button>
         </div>
         <!-- <div class="subtitle">Hóa giải Phá Quân • Nuôi dưỡng Thiên Cơ • Xây dựng Tử Vi</div> -->
         <div class="date-box">
@@ -78,7 +78,7 @@
             <div class="checklist-item priority-low">
                 <input type="checkbox" id="morning4" onchange="updateStats()">
                 <label for="morning4">
-                    <strong>Ăn sáng giàu Omega-3:</strong> yến mạch + hạt óc chó + chuối + trà xanh (hạn chế cà phê!)
+                    <strong>Ăn sáng giàu Omega-3:</strong> yến mạch + sữa chua + chuối + hạt 
                 </label>
             </div>
 
@@ -314,7 +314,7 @@
                     REVIEW HẰNG NGÀY
                 </div>
                 <div class="checklist-item">
-                    <label> Dậy sớm trước 6h</label>
+                    <label> Dậy sớm 6h, tắm nắng 10p</label>
                 </div>
                 <div class="checklist-item">
                     <label> Học tập 1-2 giờ (Học ngoại ngữ, cách viết bài Affiliate trên các nền tảng)</label>
@@ -328,18 +328,18 @@
                  <div class="checklist-item">
                     <label> Networking (1-2 người)</label>
                 </div>
-                 <div class="checklist-item">
-                    <label> Ngủ trước 23h</label>
+                <div class="checklist-item">
+                    <label> Thiền sáng và tối 7-10p</label>
                 </div>
-                 <div class="checklist-item">
-                    <label> Thiền sáng/tối 7-10p</label>
+                <div class="checklist-item">
+                    <label> Plans mục tiêu (nơi đến) cho ngày mai và cam kết hoàn thành ổn định mỗi ngày không đổi ý</label>
                 </div>
-                 <div class="checklist-item">
-                    <label> Plans mục tiêu (nơi đến) cho ngày mai và cam kết hoàn thành ổn định mỗi ngày</label>
-                </div>
-                 <div class="checklist-item">
+                <div class="checklist-item">
                     <label>Cảm xúc chủ đạo của ngày hôm nay là gì? Đánh giá lại hôm nay bạn đã thay đổi gì, làm gì tốt hơn? Và đã gặp ai, học được gì</label>
                 </div>
+                <div class="checklist-item">
+                   <label> Ngủ trước 23h</label>
+               </div>
             </div>
 
             <!-- WEEKLY REVIEW -->
@@ -352,13 +352,10 @@
                     <label>Phải Đọc xong 1 cuốn sách - rút kết lại và kể cho người khác nghe</label>
                 </div>
                 <div class="checklist-item">
-                    <label>Tính toán tài chính</label>
-                </div>
-                <div class="checklist-item">
                     <label>Nghe podcast xây dựng kỹ năng trên youtube</label>
                 </div>
                 <div class="checklist-item">
-                    <label>Thành tựu lớn nhất trong tuần là gì?</label>
+                    <label>Thành tựu lớn nhất trong tuần là gì? Ghi lại và tự thưởng cho bản thân khi đã hoàn thành</label>
                 </div>
                 <div class="checklist-item">
                     <label>Khó khăn lớn nhất trong tuần là gì? Mình đã vượt qua nó như thế nào?</label>
@@ -380,18 +377,24 @@
                 <div class="checklist-item">
                     <label>Nhìn lại mục tiêu tháng, mình đã đạt được bao nhiêu %?</label>
                 </div>
+                  <div class="checklist-item">
+                    <label>Phải Deploy 3-4 web app mỗi tháng</label>
+                </div>
+                   <div class="checklist-item">
+                    <label>Phải bán được sản phẩm trên W+</label>
+                </div>
                 <div class="checklist-item">
-                    <label>Tham gia 2-3 sự kiện</label>
+                    <label>Tham gia 2-3 sự kiện meetup</label>
                 </div>
                 <div class="checklist-item">
                     <label>3 điều tuyệt vời nhất đã xảy ra trong tháng?</label>
                 </div>
                 <div class="checklist-item">
-                    <label>Kế hoạch cho tháng tới là gì? ( Du lịch ngắn ngày)</label>
+                    <label>Kế hoạch cho tháng tới là gì? (Lên ý tưởng làm projects cho tháng tới, Du lịch ngắn ngày)</label>
                 </div>
                 
                 <div class="checklist-item">
-                    <label>Sắp xếp tài chính - Mở tài khoản tiết kiệm chuyển vào 30% thu nhập</label>
+                    <label>Sắp xếp tài chính - Chuyển tiết kiệm 30% thu nhập</label>
                 </div>
 
             </div>
@@ -407,15 +410,15 @@
                 <div class="checklist-item">
                     <label>Đi du lịch dài hạn tự thưởng cho bản thân</label>
                 </div>
-                <div class="checklist-item">
+                <!-- <div class="checklist-item">
                     <label>Đạt được lương 2000$/tháng</label>
-                </div>
+                </div> -->
             </div>
 
             <div class="notes-section">
                 <h3>📝 NOTE HÔM NAY</h3>
                 <textarea id="reviewInput" placeholder="Cảm xúc đặc biệt? Thành tựu nhỏ? Bài học rút ra? Viết thoải mái..."></textarea>
-                <button id="addReviewBtn" class="print-btn" style="margin-top: 10px; width: auto; padding: 10px 20px;">Thêm Review</button>
+                <button id="addReviewBtn" class="print-btn" style="margin-top: 10px; width: auto; padding: 10px 20px;">Thêm</button>
             </div>
 
             <div class="history-section">
@@ -446,12 +449,12 @@
                 LỊCH SỬ CHECK
             </div>
 
-            <div class="history-controls">
+            <!-- <div class="history-controls">
                 <button onclick="showHistory('all')" class="print-btn" style="background:#667eea; padding:8px 12px; font-size:14px; border-radius:8px;">Xem tất cả</button>
                 <button onclick="showHistory('90')" class="print-btn" style="background:#28a745; padding:8px 12px; font-size:14px; border-radius:8px;">90 ngày gần nhất</button>
-                <!-- <button onclick="exportHistory()" class="print-btn" style="background:#764ba2; padding:8px 12px; font-size:14px; border-radius:8px;">Xuất JSON</button> -->
+                <button onclick="exportHistory()" class="print-btn" style="background:#764ba2; padding:8px 12px; font-size:14px; border-radius:8px;">Xuất JSON</button>
                 <button onclick="clearHistoryConfirm()" class="print-btn" style="background:#dc3545; padding:8px 12px; font-size:14px; border-radius:8px;">Xóa lịch sử</button>
-            </div>
+            </div> -->
 
             <div id="historyList" class="history-list" aria-live="polite">
                 <!-- items injected here -->
@@ -461,7 +464,7 @@
         </div>
 
         <div style="text-align: center; color: #999; font-size: 12px; margin-top: 30px;">
-            © 2025 • Hành trình tự cứu chính mình
+            © 2025 • Phát triển bởi GiniD
         </div>
     </div>
     <script src="db.js"></script>
