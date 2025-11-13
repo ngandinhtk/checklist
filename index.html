@@ -10,8 +10,11 @@
 <body>
     <div class="container">
         <h1>🌟 CHECKLIST HẰNG NGÀY 🌟</h1>
+        <div class="affirmation-box">
+            <p id="affirmationText">Mỗi ngày tôi đều trở nên mạnh mẽ hơn.</p>
+            <button id="newAffirmationBtn">Affirmations</button>
+        </div>
         <!-- <div class="subtitle">Hóa giải Phá Quân • Nuôi dưỡng Thiên Cơ • Xây dựng Tử Vi</div> -->
-        
         <div class="date-box">
             <label>📅 Ngày:</label>
             <input type="date" id="dateInput">
@@ -38,7 +41,8 @@
 
         <div class="tabs">
             <button class="tab-link active" onclick="openTab(event, 'checklistTab')">Checklist</button>
-            <button class="tab-link" onclick="openTab(event, 'toolsTab')">Công cụ</button>
+            <button class="tab-link" onclick="openTab(event, 'reviewTab')">Review</button>
+            <button class="tab-link" onclick="openTab(event, 'toolsTab')">Tool</button>
         </div>
 
         <div id="checklistTab" class="tab-content" style="display: block;">
@@ -64,17 +68,39 @@
                 </label>
             </div>
             
-            <div class="checklist-item priority-medium">
+            <!-- <div class="checklist-item priority-medium">
                 <input type="checkbox" id="morning3" onchange="updateStats()">
                 <label for="morning3">
                     <strong>Viết 3 điều biết ơn hôm nay:</strong> Lập trình não bộ tích cực ngay từ đầu ngày
                 </label>
-            </div>
+            </div> -->
             
             <div class="checklist-item priority-low">
                 <input type="checkbox" id="morning4" onchange="updateStats()">
                 <label for="morning4">
                     <strong>Ăn sáng giàu Omega-3:</strong> yến mạch + hạt óc chó + chuối + trà xanh (hạn chế cà phê!)
+                </label>
+            </div>
+
+            <div class="checklist-item priority-low">
+                <input type="checkbox" id="morning4" onchange="updateStats()">
+                <label for="morning4">
+                    <strong>Đọc sách online 30p</strong> 
+                </label>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🌅</span>
+                LÀM VIỆC CHÍNH (9h-12h)
+                <span class="time-label">VÀNG NĂNG LƯỢNG</span>
+            </div>
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="morning1" onchange="updateStats()">
+                <label for="morning1">
+                    <strong>DEEPWORK:</strong> Chọn 1 nhiệm vụ quan trọng nhất, tập trung làm trong 90 phút (KHÔNG MẠNG XÃ HỘI!)
                 </label>
             </div>
         </div>
@@ -83,7 +109,7 @@
         <div class="section">
             <div class="section-title">
                 <span class="section-icon">☀️</span>
-                BUỔI TRƯA (12h-14h)
+                BUỔI TRƯA (12h30-14h)
             </div>
             
             <div class="checklist-item priority-medium">
@@ -141,10 +167,21 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="evening1" onchange="updateStats()">
                 <label for="evening1">
-                    <strong>Vận động 1 tiếng:</strong> Chạy bộ/Yoga/Võ thuật/Dance (xả căng thẳng!)
+                    <strong>Vận động 30p:</strong> Chạy bộ/Yoga/Võ thuật/Dance (xả căng thẳng!)
                      <!-- (xả Phá Quân!) -->
                 </label>
             </div>
+
+            
+            <div class="checklist-item priority-high">
+                <input type="checkbox" id="evening1" onchange="updateStats()">
+                <label for="evening1">
+                    <strong>Thời gian cá nhân:</strong> Sở thích/Nghe nhạc/Đi dạo/học thêm (giảm stress!) 
+                     <!-- (xả Phá Quân!) -->
+                </label>
+            </div>
+
+
             
             <div class="checklist-item priority-medium">
                 <input type="checkbox" id="evening2" onchange="updateStats()">
@@ -156,7 +193,7 @@
             <div class="checklist-item priority-low">
                 <input type="checkbox" id="evening3" onchange="updateStats()">
                 <label for="evening3">
-                    <strong>Nói chuyện với người thật 15 phút:</strong> Gặp mặt/gọi điện (KHÔNG CHAT!) - Chống cô lập
+                    <strong>Gặp bạn bè (2-3 lần/tuần):</strong> Gặp mặt/gọi điện (KHÔNG CHAT!) - Chống cô lập
                 </label>
             </div>
         </div>
@@ -172,7 +209,7 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="night1" onchange="updateStats()">
                 <label for="night1">
-                    <strong>21h: BRAIN DUMP!</strong> Viết nhật ký cảm xúc 10-15 phút mọi suy nghĩ 
+                    <strong>BRAIN DUMP!</strong> Viết nhật ký cảm xúc 10-15 phút mọi suy nghĩ 
                 </label>
             </div>
             
@@ -270,6 +307,106 @@
             </div>
         </div>
         </div>
+        <div id="reviewTab" class="tab-content">
+            <!-- DAILY REVIEW -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">🧐</span>
+                    REVIEW HẰNG NGÀY
+                </div>
+                <div class="checklist-item">
+                    <label> Dậy sớm trước 6h</label>
+                </div>
+                <div class="checklist-item">
+                    <label> Học tập 1-2 giờ</label>
+                </div>
+                <div class="checklist-item">
+                    <label> Tập thể dục 60-90 phút</label>
+                </div>
+                <div class="checklist-item">
+                    <label> Làm việc tập trung (Không MXH)</label>
+                </div>
+                 <div class="checklist-item">
+                    <label> Networking (1-2 người)</label>
+                </div>
+                 <div class="checklist-item">
+                    <label> Ngủ trước 23h</label>
+                </div>
+                 <div class="checklist-item">
+                    <label> Thiền sáng/tối 7-10p</label>
+                </div>
+                 <div class="checklist-item">
+                    <label> Plans mục tiêu (nơi đến) cho ngày mai và cam kết hoàn thành ổn định mỗi ngày</label>
+                </div>
+                 <div class="checklist-item">
+                    <label>Cảm xúc chủ đạo của ngày hôm nay là gì? Đánh giá lại hôm nay bạn đã thay đổi gì, làm gì tốt hơn? Và đã gặp ai, học được gì</label>
+                </div>
+            </div>
+
+            <!-- WEEKLY REVIEW -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">📅</span>
+                    REVIEW HẰNG TUẦN
+                </div>
+                <div class="checklist-item">
+                    <label>Phải Đọc xong 1 cuốn sách - rút kết lại và kể cho người khác nghe</label>
+                </div>
+                <div class="checklist-item">
+                    <label>Tính toán tài chính</label>
+                </div>
+                <div class="checklist-item">
+                    <label>Thành tựu lớn nhất trong tuần là gì?</label>
+                </div>
+                <div class="checklist-item">
+                    <label>Khó khăn lớn nhất trong tuần là gì? Mình đã vượt qua nó như thế nào?</label>
+                </div>
+                <div class="checklist-item">
+                    <label>Mục tiêu tuần tới là gì?</label>
+                </div>
+            </div>
+
+            <!-- MONTHLY REVIEW -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">🗓️</span>
+                    REVIEW HẰNG THÁNG
+                </div>
+                <div class="checklist-item">
+                    <label>Nhìn lại mục tiêu tháng, mình đã đạt được bao nhiêu %?</label>
+                </div>
+                <div class="checklist-item">
+                    <label>Tham gia 2-3 sự kiện</label>
+                </div>
+                <div class="checklist-item">
+                    <label>3 điều tuyệt vời nhất đã xảy ra trong tháng?</label>
+                </div>
+                <div class="checklist-item">
+                    <label>Kế hoạch cho tháng tới là gì? ( Du lịch ngắn ngày)</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <label>Sắp xếp tài chính - Mở tài khoản tiết kiệm chuyển vào 30% thu nhập</label>
+                </div>
+
+            </div>
+            <!-- YEARLY REVIEW -->
+            <div class="section">
+                <div class="section-title">
+                    <span class="section-icon">🗓️</span>
+                    REVIEW HẰNG NĂM
+                </div>
+                <div class="checklist-item">
+                    <label>Nhìn lại mục tiêu năm, mình đã đạt được bao nhiêu %?</label>
+                </div>
+                <div class="checklist-item">
+                    <label>Đi du lịch dài hạn tự thưởng cho bản thân</label>
+                </div>
+                <div class="checklist-item">
+                    <label>Đạt được lương 2000$/tháng</label>
+                </div>
+            </div>
+        </div>
 
         <div id="toolsTab" class="tab-content">
             <div class="emergency-box">
@@ -308,7 +445,7 @@
         </div>
 
         <div style="text-align: center; color: #999; font-size: 12px; margin-top: 30px;">
-            © 2025 • Hành trình 90 ngày tự cứu chính mình
+            © 2025 • Hành trình tự cứu chính mình
         </div>
     </div>
     <script src="db.js"></script>

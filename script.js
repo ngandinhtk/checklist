@@ -263,3 +263,44 @@ function openTab(evt, tabName) {
         showHistory('90');
     }
 }
+
+// --- Affirmations ---
+const affirmations = [
+    "Tôi chọn sự bình yên.",
+    "Tiền bạc đến với tôi một cách dễ dàng và tự nhiên.",
+    "Tôi xứng đáng với tất cả những điều tốt đẹp trong cuộc sống.",
+    "Hôm nay là một ngày tuyệt vời.",
+    "Tôi mạnh mẽ hơn tôi nghĩ.",
+    "Tôi thu hút cơ hội và thành công.",
+    "Tôi biết ơn vì tất cả những gì tôi có.",
+    "Tôi tin tưởng vào khả năng của bản thân.",
+    "Mỗi ngày tôi đều học hỏi và phát triển.",
+    "Tôi được yêu thương và ủng hộ.",
+    "Tôi tạo ra thực tại của riêng mình.",
+    "Tôi tha thứ cho bản thân và những người khác.",
+    "Tôi kỷ luật mỗi ngày.",
+    "Tôi tập trung vào mục tiêu",
+    "Tôi là một thỏi nam châm hút tiền.",
+    "Sự giàu có đang chảy vào cuộc sống của tôi.",
+    "Tôi can đảm đối mặt với mọi thử thách.",
+    "Tôi luôn giữ thái độ tích cực.",
+    "Tôi tự hào về con người tôi đang trở thành.",
+    "Tôi buông bỏ những gì không còn phục vụ tôi.",
+    "Vũ trụ luôn ủng hộ tôi."
+];
+
+const affirmationText = document.getElementById('affirmationText');
+const newAffirmationBtn = document.getElementById('newAffirmationBtn');
+
+function showNewAffirmation() {
+    const randomIndex = Math.floor(Math.random() * affirmations.length);
+    affirmationText.textContent = affirmations[randomIndex];
+}
+
+// Show a new affirmation on page load
+window.addEventListener('load', showNewAffirmation);
+
+// Show a new affirmation when the button is clicked
+if (newAffirmationBtn) {
+    newAffirmationBtn.addEventListener('click', showNewAffirmation);
+}

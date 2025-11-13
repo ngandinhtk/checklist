@@ -76,6 +76,35 @@ h1 {
 	transition: opacity 0.25s ease-in-out;
 }
 
+.affirmation-box {
+	background: #fff3e0;
+	border: 2px solid #ffa726;
+	border-radius: 10px;
+	padding: 20px;
+	text-align: center;
+	margin-bottom: 25px;
+}
+.affirmation-box p {
+	font-size: 16px;
+	color: #ff6f00;
+	font-size: 20px;
+	margin-bottom: 15px;
+	font-weight: bold;
+}
+.affirmation-box button {
+	background: #e2ab58;
+	color: white;
+	border: none;
+	font-weight: bold;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s;
+}
+.affirmation-box button:hover {
+	background: #e59400;
+}
+
 .section {
 	margin-bottom: 30px;
 	/* border-left: 4px solid #667eea; */
