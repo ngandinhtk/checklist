@@ -273,7 +273,7 @@ const affirmations = [
     "Tôi chọn sự bình yên.",
     "Tiền bạc đến với tôi một cách dễ dàng và tự nhiên.",
     "Tôi xứng đáng với tất cả những điều tốt đẹp trong cuộc sống.",
-    "Hôm nay là một ngày tuyệt vời.",
+    // "Hôm nay là một ngày tuyệt vời.",
     "Tôi mạnh mẽ hơn tôi nghĩ.",
     "Tôi thu hút cơ hội và thành công.",
     "Tôi biết ơn vì tất cả những gì tôi có.",
@@ -289,7 +289,7 @@ const affirmations = [
     "Tôi can đảm đối mặt với mọi thử thách.",
     "Tôi luôn giữ thái độ tích cực.",
     "Tôi tự hào về con người tôi đang trở thành.",
-    "Tôi buông bỏ những gì không còn phục vụ tôi.",
+    "Tôi buông bỏ những năng lượng cũ không phải của tôi.",
     "Vũ trụ luôn ủng hộ tôi."
 ];
 
