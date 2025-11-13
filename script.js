@@ -280,7 +280,7 @@ const affirmations = [
     "Tôi tin tưởng vào khả năng của bản thân.",
     "Mỗi ngày tôi đều học hỏi và phát triển.",
     "Tôi được yêu thương và ủng hộ.",
-    "Tôi tạo ra thực tại của riêng mình.",
+    "Tôi tạo ra thực tại yêu thương và hạnh phúc cho mình.",
     "Tôi tha thứ cho bản thân và những người khác.",
     "Tôi kỷ luật mỗi ngày.",
     "Tôi tập trung vào mục tiêu",
