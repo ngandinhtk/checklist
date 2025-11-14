@@ -125,6 +125,8 @@ window.addEventListener('load', function() {
     if (dayNum) dayNum.addEventListener('change', updateStats);
     loadReviews();
     showHistory('90'); // Tải lịch sử khi trang được tải
+
+
 });
 
 // Cập nhật khi đổi ngày
@@ -141,6 +143,7 @@ document.getElementById('dateInput').addEventListener('change', function() {
 
 window.addEventListener('beforeunload', function(event) {
     updateStats();
+    sessionStorage.setItem('scrollPos', window.scrollY);
 });
 
 // Logic checkComplete hiện được tích hợp vào updateStats để ngăn chặn nhiều cảnh báo.
@@ -278,7 +281,7 @@ const affirmations = [
     "Tôi chọn sự bình yên.",
     "Tiền bạc đến với tôi một cách dễ dàng và tự nhiên.",
     "Tôi xứng đáng với tất cả những điều tốt đẹp trong cuộc sống.",
-    // "Hôm nay là một ngày tuyệt vời.",
+    "Hôm nay là một ngày tuyệt vời.",
     "Tôi mạnh mẽ hơn tôi nghĩ.",
     "Tôi thu hút cơ hội và thành công.",
     "Tôi biết ơn vì tất cả những gì tôi có.",

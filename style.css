@@ -26,8 +26,9 @@ body {
 h1 {
 	text-align: center;
 	color: #667eea;
+	font-weight: bold;
 	margin-bottom: 10px;
-	font-size: 28px;
+	font-size: 25px;
 }
 
 .subtitle {
@@ -187,7 +188,7 @@ h1 {
 }
 
 .notes-section textarea {
-	width: 93%;
+	width: 96%;
 	min-height: 100px;
 	padding: 10px;
 	border: 1px solid #ddd;
@@ -195,6 +196,12 @@ h1 {
 	font-family: inherit;
 	font-size: 14px;
 	resize: vertical;
+}
+
+@media (max-width: 600px) {
+	.notes-section textarea {
+		width: 94%  
+	}
 }
 
 /* History styles */
@@ -225,7 +232,7 @@ h1 {
 .history-item {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: end;
 	padding: 8px 10px;
 	border-bottom: 1px dashed #eef3fb;
 	font-size: 14px;
@@ -362,13 +369,20 @@ h1 {
 
 .review-content {
     flex-grow: 1;
-    max-width: 230px;
+
+    width: 600px;
     word-wrap: break-word;
     white-space: pre-wrap;
 }
+@media (max-width: 600px) {
+	.review-content {
+		width: 170px;  
+	}
+}
 
 .review-content p {
-    margin: 0 0 5px 0;
+    margin: 0 10px 5px 0;
+	
     white-space: pre-wrap;
 }
 
