@@ -16,12 +16,18 @@
         </div>
         <!-- <div class="subtitle">Hóa giải Phá Quân • Nuôi dưỡng Thiên Cơ • Xây dựng Tử Vi</div> -->
         <div class="date-box">
-            <label>📅 Ngày:</label>
-            <input type="date" id="dateInput">
+            <div class="date-box1">
+
+                <label>📅 Ngày:</label>
+                <input type="date" id="dateInput">
+            </div>
+            <div class="date-box1">
+
             <label>🔢 Ngày thứ:</label>
             <input type="number" id="dayNumber" placeholder="1" min="1" max="90" style="width: 50px;">
             <span>/90</span>
-            <span id="savedBadge" class="saved-badge">Đã lưu</span>
+            </div>
+          
         </div>
 
         <div class="stats no-print">
@@ -64,7 +70,8 @@
             <div class="checklist-item priority-high">
                 <input type="checkbox" id="morning2" onchange="updateStats()">
                 <label for="morning2">
-                    <strong>Tắm:</strong> Tập trung vào cảm giác - (Uống 400ml nước ấm Thanh lọc cơ thể )
+                    <strong>Tắm nước lạnh + (Uống 300ml nước ấm sau đó):</strong> Tập trung 100% vào cảm giác (Sensory Overload)
+
                 </label>
             </div>
             
@@ -467,7 +474,7 @@
             <!-- <div class="small-muted" style="margin-top:8px;">Ghi chú: dữ liệu được lưu cục bộ trên trình duyệt (IndexedDB). Để chia sẻ/đồng bộ, xuất JSON rồi lưu nơi an toàn.</div> -->
         </div>
         </div>
-
+  <span id="savedBadge" class="saved-badge">Đã lưu</span>
         <div style="text-align: center; color: #999; font-size: 12px; margin-top: 30px;">
             © 2025 • Phát triển bởi GiniD
         </div>

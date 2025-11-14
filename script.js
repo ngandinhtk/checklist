@@ -126,7 +126,7 @@ window.addEventListener('load', function() {
     loadReviews();
     showHistory('90'); // Tải lịch sử khi trang được tải
 
-
+ 
 });
 
 // Cập nhật khi đổi ngày

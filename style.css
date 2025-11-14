@@ -46,6 +46,17 @@ h1 {
 	border-radius: 10px;
 	border: 2px solid #667eea;
 }
+@media (max-width: 600px) {
+	.date-box1 {
+	display: flex;
+	align-items: center;
+
+	}	
+	.date-box label {
+		display: block;
+		text-align: left;
+	}
+}
 
 .date-box label {
 	font-weight: bold;
