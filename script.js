@@ -278,8 +278,8 @@ function openTab(evt, tabName) {
 
 // --- Affirmations ---
 const affirmations = [
-    "Tôi chọn sự bình yên.",
-    "Tiền bạc đến với tôi một cách dễ dàng và tự nhiên.",
+    // "Tôi chọn sự bình yên.",
+    // "Tiền bạc đến với tôi một cách dễ dàng và tự nhiên.",
     "Tôi xứng đáng với tất cả những điều tốt đẹp trong cuộc sống.",
     "Hôm nay là một ngày tuyệt vời.",
     "Tôi mạnh mẽ hơn tôi nghĩ.",
@@ -298,10 +298,10 @@ const affirmations = [
     "Tôi kiểm soát được cảm xúc của mình.",
     "Tôi thu hút những người tích cực và truyền cảm hứng.",
     "Tôi tập trung vào mục tiêu",
-    "Tôi là một thỏi nam châm hút tiền.",
+    // "Tôi là một thỏi nam châm hút tiền.",
     "Sự giàu có đang chảy vào cuộc sống của tôi.",
     "Còn khó khăn là tôi biết mình đang tiến bộ.",
-    "Tôi tin những việc mình làm, những con đường mà mình đi.",
+    "Tôi tin những việc mình làm, những con đường mà mình đi, người mình gặp.",
     "Tôi sống trong hiện tại và tận hưởng từng khoảnh khắc.",
     "Tôi can đảm đối mặt với mọi thử thách.",
     "Tôi luôn giữ thái độ tích cực.",
