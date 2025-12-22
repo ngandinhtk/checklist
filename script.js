@@ -271,8 +271,10 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     if(evt) evt.currentTarget.className += " active";
 
-    if (tabName === 'reviewTab') {
+    // Tải nội dung động khi tab Tool được mở
+    if (tabName === 'toolsTab') {
         loadReviews();
+        showHistory('all');
     }
 }
 
