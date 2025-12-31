@@ -6,6 +6,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checklist Hàng Ngày</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styles for Edit/Delete buttons */
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+        }
+        .checklist-item label[contenteditable="true"] {
+            cursor: text;
+            outline: 2px solid #4CAF50;
+            padding: 5px;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        .item-actions {
+            display: none;
+            gap: 5px;
+        }
+        .checklist-item.active .item-actions {
+            display: flex;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 2px 5px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .action-btn:hover {
+            background-color: #f0f0f0;
+        }
+        .delete-btn:hover {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+        .edit-btn:hover {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+        .add-btn {
+            width: 100%;
+            padding: 8px;
+            background: #fff;
+            border: 2px dashed #ddd;
+            color: #888;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .add-btn:hover {
+            background: #f9f9f9;
+            border-color: #bbb;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -475,5 +539,170 @@
     </div>
     <script src="db.js"></script>
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ẩn các nút khi click ra ngoài vùng checklist
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.checklist-item')) {
+                    document.querySelectorAll('.checklist-item.active').forEach(item => {
+                        item.classList.remove('active');
+                        // Reset trạng thái nếu đang sửa dở mà click ra ngoài
+                        const label = item.querySelector('label');
+                        if (label && label.isContentEditable) {
+                            label.contentEditable = 'false';
+                            const editBtn = item.querySelector('.edit-btn');
+                            if (editBtn) editBtn.innerHTML = '✏️';
+                        }
+                    });
+                }
+            });
+
+            // Function to add "Add New" buttons to sections
+            function setupAddButtons() {
+                const sections = document.querySelectorAll('.section');
+                sections.forEach(section => {
+                    if (section.querySelector('.add-btn')) return;
+
+                    const addBtn = document.createElement('button');
+                    addBtn.className = 'add-btn no-print';
+                    addBtn.innerHTML = '+ Thêm nhiệm vụ mới';
+                    addBtn.onclick = function() {
+                        const id = 'custom_' + Date.now();
+                        const div = document.createElement('div');
+                        div.className = 'checklist-item';
+                        
+                        // Kiểm tra xem section có nằm trong tab Checklist không
+                        if (section.closest('#checklistTab')) {
+                            div.innerHTML = `
+                                <input type="checkbox" id="${id}">
+                                <label for="${id}">Nhiệm vụ mới</label>
+                            `;
+                        } else {
+                            // Nếu ở tab Review hoặc Tool thì chỉ thêm text
+                            div.innerHTML = `
+                                <label>Nhiệm vụ mới</label>
+                            `;
+                        }
+                        
+                        // Insert before the add button
+                        section.insertBefore(div, addBtn);
+                        
+                        // Setup events for the new checkbox
+                        const checkbox = div.querySelector('input');
+                        if (checkbox) {
+                            checkbox.addEventListener('change', function() {
+                                if (typeof updateStats === 'function') updateStats();
+                            });
+                        }
+
+                        // Setup edit/delete buttons for the new item
+                        setupChecklistItems();
+                        
+                        // Trigger edit mode immediately
+                        const editBtn = div.querySelector('.edit-btn');
+                        if (editBtn) editBtn.click();
+                    };
+                    section.appendChild(addBtn);
+                });
+            }
+
+            // Function to add Edit/Delete buttons to checklist items
+            function setupChecklistItems() {
+                const items = document.querySelectorAll('.checklist-item');
+                
+                items.forEach(item => {
+                    // Skip if already has actions
+                    if (item.querySelector('.item-actions')) return;
+
+                    // Thêm sự kiện click vào dòng để hiển thị nút
+                    item.addEventListener('click', function(e) {
+                        // Không xử lý nếu click vào chính các nút thao tác (để tránh xung đột)
+                        if (e.target.closest('.item-actions')) return;
+
+                        // Ẩn nút ở các dòng khác
+                        document.querySelectorAll('.checklist-item.active').forEach(activeItem => {
+                            if (activeItem !== item) {
+                                activeItem.classList.remove('active');
+                                const label = activeItem.querySelector('label');
+                                if (label && label.isContentEditable) {
+                                    label.contentEditable = 'false';
+                                    const editBtn = activeItem.querySelector('.edit-btn');
+                                    if (editBtn) editBtn.innerHTML = '✏️';
+                                }
+                            }
+                        });
+
+                        // Hiển thị nút cho dòng hiện tại
+                        item.classList.add('active');
+                    });
+
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'item-actions';
+
+                    // Edit Button
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'action-btn edit-btn';
+                    editBtn.innerHTML = '✏️';
+                    editBtn.title = 'Sửa';
+                    editBtn.onclick = function(e) {
+                        e.stopPropagation();
+                        const label = item.querySelector('label');
+                        
+                        if (label.isContentEditable) {
+                            // Save
+                            label.contentEditable = 'false';
+                            editBtn.innerHTML = '✏️';
+                        } else {
+                            // Edit
+                            label.contentEditable = 'true';
+                            label.focus();
+                            editBtn.innerHTML = '💾';
+                            
+                            // Prevent checkbox toggle while editing
+                            label.onclick = function(event) {
+                                if (label.isContentEditable) {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+                            };
+                            
+                            // Handle Enter key to save
+                            label.onkeydown = function(event) {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    label.blur();
+                                    label.contentEditable = 'false';
+                                    editBtn.innerHTML = '✏️';
+                                }
+                            };
+                        }
+                    };
+
+                    // Delete Button
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'action-btn delete-btn';
+                    deleteBtn.innerHTML = '🗑️';
+                    deleteBtn.title = 'Xoá';
+                    deleteBtn.onclick = function(e) {
+                        e.stopPropagation();
+                        if (confirm('Bạn có chắc chắn muốn xoá mục này không?')) {
+                            item.remove();
+                            // Update stats if function exists
+                            if (typeof updateStats === 'function') {
+                                updateStats();
+                            }
+                        }
+                    };
+
+                    actionsDiv.appendChild(editBtn);
+                    actionsDiv.appendChild(deleteBtn);
+                    item.appendChild(actionsDiv);
+                });
+            }
+
+            setupChecklistItems();
+            setupAddButtons();
+        });
+    </script>
 </body>
 </html>
