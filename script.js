@@ -18,9 +18,31 @@ function updateStats() {
     let completed = 0;
 
     const state = {};
+    const customTasks = [];
+    const customReviewTasks = [];
     checkboxes.forEach(cb => {
         state[cb.id] = cb.checked;
         if (cb.checked) completed++;
+        if (cb.id.startsWith('custom_')) {
+            const label = document.querySelector(`label[for="${cb.id}"]`);
+            const task = { id: cb.id, text: label ? label.textContent.trim() : '', checked: cb.checked };
+            const section = cb.closest('.section');
+            if (section) {
+                const sectionIndex = Array.from(document.querySelectorAll('#checklistTab .section')).indexOf(section);
+                if (sectionIndex >= 0) task.sectionIndex = sectionIndex;
+            }
+            customTasks.push(task);
+        }
+    });
+    document.querySelectorAll('#reviewTab .checklist-item[data-custom-task="true"]').forEach(item => {
+        const label = item.querySelector('label');
+        const section = item.closest('.section');
+        if (!label || !section) return;
+        customReviewTasks.push({
+            id: item.dataset.taskId,
+            text: label.textContent.trim(),
+            sectionIndex: Array.from(document.querySelectorAll('#reviewTab .section')).indexOf(section)
+        });
     });
 
     const percent = Math.round((completed / total) * 100);
@@ -51,6 +73,8 @@ function updateStats() {
                 state: state,
                 meta: {
                     ...oldMeta,
+                    customTasks,
+                    customReviewTasks,
                     dayNumber: dayNumber,
                     notes: notes,
                     savedAt: (new Date()).toISOString(),
@@ -100,6 +124,15 @@ window.addEventListener('load', function() {
                             checkbox.checked = state[id];
                         }
                     });
+                    const customTasks = parsed.meta && Array.isArray(parsed.meta.customTasks)
+                        ? parsed.meta.customTasks
+                        : (Array.isArray(parsed.customTasks) ? parsed.customTasks : []);
+                    if (typeof window.restoreCustomTasks === 'function') {
+                        window.restoreCustomTasks(customTasks);
+                    }
+                    if (typeof window.restoreCustomReviewTasks === 'function') {
+                        window.restoreCustomReviewTasks(parsed.meta && parsed.meta.customReviewTasks || []);
+                    }
                     // restore metadata if present
                     if (parsed && parsed.meta) {
                         if (parsed.meta.dayNumber) document.getElementById('dayNumber').value = parsed.meta.dayNumber;

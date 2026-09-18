@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checklist Hàng Ngày</title>
+    <title>Checklist Hằng Ngày | Thói quen tốt mỗi ngày</title>
+    <meta name="description" content="Checklist hằng ngày giúp theo dõi thói quen, công việc và tiến độ của bạn.">
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
     <style>
         /* Styles for Edit/Delete buttons */
@@ -453,60 +456,9 @@
                 </div>
             </div>
 
-            <!-- <div class="section">
-                <div class="section-title">
-                    <span class="section-icon">🗓️</span>
-                    REVIEW HẰNG THÁNG
-                </div>
-                <div class="checklist-item">
-                    <label>Nhìn lại mục tiêu tháng, mình đã đạt được bao nhiêu % </label>
-                </div>
-                  <div class="checklist-item">
-                    <label>Phải Deploy 3 hoặc 4 web app mỗi tháng</label>
-                </div>
-                   <div class="checklist-item">
-                    <label>Phải bán được sản phẩm trên W+</label>
-                </div>
-                <div class="checklist-item">
-                    <label>Tham gia 2-3 sự kiện meetup</label>
-                </div>
-                <div class="checklist-item">
-                    <label>3 điều tuyệt vời trong tháng?</label>
-                </div>
-                <div class="checklist-item">
-                    <label>Kế hoạch cho tháng tới là gì? (Lên idea và PRD cho projects mới, Du lịch ngắn ngày)</label>
-                </div>
-                <div class="checklist-item">
-                    <label>Sắp xếp tài chính - Chuyển 30% thu nhập vào tiết kiệm </label>
-                </div>
-
-            </div>
-            <div class="section">
-                <div class="section-title">
-                    <span class="section-icon">📔</span>
-                    REVIEW HẰNG NĂM
-                </div>
-                <div class="checklist-item">
-                    <label>Nhìn lại mục tiêu năm, mình đã đạt được bao nhiêu %?</label>
-                </div>
-                <div class="checklist-item">
-                    <label>Đi du lịch dài hạn tự thưởng cho bản thân</label>
-                </div>
-                <div class="checklist-item">
-                    <label>Đạt được KPI </label>
-                </div>
-            </div> -->
-
         </div>
          <div id="toolsTab" class="tab-content">
-            <!-- <div class="emergency-box">
-            <h3>🚨 KHI KHẨN CẤP - GỌI NGAY!</h3>
-            <ul>
-                <li><strong>2 người bạn "giữ chân":</strong> Tên: __________ SĐT: __________</li>
-                <li><strong>Người thân tin cậy:</strong> Tên: __________ SĐT: __________</li>
-            </ul>
-            </div> -->
-
+          
             <div class="notes-section">
                 <h3>📝 GHI CHÚ HÔM NAY</h3>
                 <textarea id="reviewInput" placeholder="Cảm xúc đặc biệt? Thành tựu nhỏ? Bài học rút ra? Viết thoải mái..."></textarea>
@@ -584,6 +536,11 @@
                             `;
                         }
                         
+                        if (section.closest('#reviewTab')) {
+                            div.dataset.customTask = 'true';
+                            div.dataset.taskId = id;
+                        }
+
                         // Insert before the add button
                         section.insertBefore(div, addBtn);
                         
@@ -593,6 +550,18 @@
                             checkbox.addEventListener('change', function() {
                                 if (typeof updateStats === 'function') updateStats();
                             });
+                        }
+
+                        if (section.closest('#checklistTab')) {
+                            div.dataset.customTask = 'true';
+                            const customInput = div.querySelector('input');
+                            const customLabel = div.querySelector('label');
+                            if (customInput) customInput.addEventListener('change', () => updateStats());
+                            if (customLabel) {
+                                customLabel.addEventListener('blur', () => updateStats());
+                                customLabel.addEventListener('input', () => updateStats());
+                            }
+                            if (typeof updateStats === 'function') updateStats();
                         }
 
                         // Setup edit/delete buttons for the new item
@@ -606,6 +575,48 @@
                 });
             }
 
+            window.restoreCustomTasks = function(tasks) {
+                const sections = Array.from(document.querySelectorAll('#checklistTab .section'));
+                tasks.forEach(task => {
+                    if (!task || !task.id || !task.id.startsWith('custom_') || document.getElementById(task.id)) return;
+                    const section = sections[task.sectionIndex] || sections[0];
+                    if (!section) return;
+                    const div = document.createElement('div');
+                    div.className = 'checklist-item';
+                    div.dataset.customTask = 'true';
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = task.id;
+                    checkbox.checked = Boolean(task.checked);
+                    checkbox.addEventListener('change', () => updateStats());
+                    const label = document.createElement('label');
+                    label.htmlFor = task.id;
+                    label.textContent = task.text || 'Nhiệm vụ mới';
+                    label.addEventListener('blur', () => updateStats());
+                    label.addEventListener('input', () => updateStats());
+                    div.append(checkbox, label);
+                    section.insertBefore(div, section.querySelector('.add-btn') || null);
+                });
+                setupChecklistItems();
+            };
+
+            window.restoreCustomReviewTasks = function(tasks) {
+                const sections = Array.from(document.querySelectorAll('#reviewTab .section'));
+                tasks.forEach(task => {
+                    if (!task || !task.id || Array.from(document.querySelectorAll('#reviewTab [data-task-id]')).some(el => el.dataset.taskId === task.id)) return;
+                    const section = sections[task.sectionIndex] || sections[0];
+                    if (!section) return;
+                    const div = document.createElement('div');
+                    div.className = 'checklist-item';
+                    div.dataset.customTask = 'true';
+                    div.dataset.taskId = task.id;
+                    const label = document.createElement('label');
+                    label.textContent = task.text || 'Nhiệm vụ mới';
+                    div.appendChild(label);
+                    section.insertBefore(div, section.querySelector('.add-btn') || null);
+                });
+                setupChecklistItems();
+            };
             // Function to add Edit/Delete buttons to checklist items
             function setupChecklistItems() {
                 const items = document.querySelectorAll('.checklist-item');
@@ -652,6 +663,7 @@
                             // Save
                             label.contentEditable = 'false';
                             editBtn.innerHTML = '✏️';
+                            if (item.dataset.customTask === 'true' && typeof updateStats === 'function') updateStats();
                         } else {
                             // Edit
                             label.contentEditable = 'true';
@@ -673,6 +685,7 @@
                                     label.blur();
                                     label.contentEditable = 'false';
                                     editBtn.innerHTML = '✏️';
+                                    if (item.dataset.customTask === 'true' && typeof updateStats === 'function') updateStats();
                                 }
                             };
                         }
